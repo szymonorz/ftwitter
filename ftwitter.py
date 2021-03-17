@@ -36,7 +36,6 @@ def get_token(identifier, password):
     }
 
     g = requests.post(guest_url, headers=headers)
-    print(g.json()['guest_token'])
     token = g.json()
     headers['x-guest-token']=g.json()['guest_token']
 
