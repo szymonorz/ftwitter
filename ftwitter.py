@@ -43,6 +43,7 @@ def get_token(identifier, password):
     print(r)
     code = r.status_code
     if code != 200:
+        print(r.json())
         print("Error while attempting to login, check other steps")
     else:
         json = r.json()
