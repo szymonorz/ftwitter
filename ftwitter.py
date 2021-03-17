@@ -128,5 +128,5 @@ def setup():
         else:
             print("Error")
 
-
-setup()
+if __name__ == '__main__':
+    setup()
