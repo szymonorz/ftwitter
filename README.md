@@ -38,7 +38,7 @@ Then run fleets.py
 python3 ftwitter.py
 ```
 
-You will be meet with this prompt
+You will be met with this prompt
 ```bash
 ftwitter>
 ```
