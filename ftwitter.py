@@ -60,22 +60,7 @@ def get_token(identifier, password):
             print("then you won't have to go through the login process again in the future")
             setup()
 
-
-def setup():
-    if not oauth_token_key or not oauth_token_secret:
-        print("Oauth token not present")
-        print("Initiating login....")
-        identifier = input("Login: ")
-        password = input("Password: ")
-        if not identifier or not password:
-            print("No password or login detected")
-            print("Exiting program")
-            return
-        else:
-            get_token(identifier, password)
-    else:
-        auth = OAuth1(consumer_key,consumer_secret,oauth_token_key,oauth_token_secret)
-
+def get_fleets(user_id, auth):
         headers = {
             'timezone': 'Europe/Warsaw',
             'os-security-patch-level': '2018-01-05',
@@ -102,16 +87,12 @@ def setup():
             'content-length': '0'
 }
         url="https://api.twitter.com/fleets/v1/user_fleets"
-        print("WARNING! 'user_id' is not the @ handle")
-        print("To get someone's user_id visit: https://tweeterid.com/")
-        user_id=input("user_id: ")
         params = {
             'user_id':user_id,
         }
 
-        fleet_r = requests.get(url, headers=headers, params=params, auth=auth)
 
-        print(fleet_r)
+        fleet_r = requests.get(url, headers=headers, params=params, auth=auth)
         code = fleet_r.status_code
         if code == 200:
             fleet_json = fleet_r.json()
@@ -127,6 +108,71 @@ def setup():
             print("Make sure your oauth_token_key and oauth_token_secret variables are correct")
         else:
             print("Error")
+
+
+def get_user(string, auth, isID):
+    headers = {
+            'timezone': 'Europe/Warsaw',
+            'os-security-patch-level': '2018-01-05',
+            'optimize-body': 'true',
+            'accept': 'application/json',
+            'x-twitter-client': 'TwitterAndroid',
+            'x-twitter-fleets-session-id': '1615841187289',
+            'user-agent': 'TwitterAndroid/8.83.1-release.03 (28831003-r-3) Android+SDK+built+for+x86/8.1.0 (Google;Android+SDK+built+for+x86;google;sdk_gphone_x86;0;;1;2013)',
+            'x-twitter-client-adid': 'a10c9956-3a4d-499a-815b-c7f7b62f733e',
+            'accept-encoding': 'zstd, gzip, deflate',
+            'x-twitter-client-language': 'en-US',
+            'x-client-uuid': '7e8c7231-46a2-4d31-895a-739864171c0d',
+            'x-twitter-client-deviceid': '6f248cf231f26378',
+            'x-twitter-client-version': '8.83.1-release.03',
+            'cache-control': 'no-store',
+            'x-twitter-active-user': 'yes',
+            'x-twitter-api-version': '5',
+            'x-twitter-client-limit-ad-tracking': '0',
+            'kdt': 'yOwqOg1fzpEbt05Kn4S6N4usLuZtV5Ef3lgZLQGb',
+            'x-b3-traceid': '5749a83b45ed7660',
+            'accept-language': 'en-US',
+            'x-twitter-client-flavor':'', 
+            'cookie': 'personalization_id=v1_oZDk98plmgflODXz5EC9Cw==; guest_id=v1%3A161584107840537238',
+            'content-length': '0'
+}
+
+    if isID:
+        params= {"user_id": string}
+    else:
+        params={"screen_name": string}
+
+    r = requests.get("https://api.twitter.com/1.1/users/lookup.json", params=params, headers=headers, auth=auth)
+    j = r.json()[0]
+    if r.status_code !=200:
+        print(j)
+        return ()
+    else:
+        return (j['screen_name'],j['id'])
+
+
+def setup():
+    if not oauth_token_key or not oauth_token_secret:
+        print("Oauth token not present")
+        print("Initiating login....")
+        identifier = input("Login: ")
+        password = input("Password: ")
+        if not identifier or not password:
+            print("No password or login detected")
+            print("Exiting program")
+            return
+        else:
+            get_token(identifier, password)
+    else:
+        auth = OAuth1(consumer_key,consumer_secret,oauth_token_key,oauth_token_secret)
+        print("Either enter user's @ handle or their id from: 'https://tweeterid.com/'")
+        user_id=input("user_id: ")
+        user = get_user(user_id, auth, user_id.isdigit())
+        if not user:
+            print("User not found or other error. Check JSON message above")
+        else:
+            print(f"{user[0]}'s fleets: ")
+            get_fleets(user[1],auth)
 
 if __name__ == '__main__':
     setup()
