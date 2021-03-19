@@ -70,7 +70,7 @@ or
 ftwitter> get f jack
 ```
 If such user exists and everything went correctly you should be met with with url's to that user's Fleets.
-``
+```
 <Response [200]>
 [url's of Fleets]
 ```
