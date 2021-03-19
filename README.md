@@ -38,25 +38,39 @@ Then run fleets.py
 python3 ftwitter.py
 ```
 
-During the first run you will be prompted to put in your login and password.
+You will be meet with this prompt
 ```bash
+ftwitter>
+```
+
+Before any other action (except 'exit') you first must log in. Do it by typing 'login' or 'l'
+```bash
+ftwitter> l
+Oauth token not present.
 Oauth token not present
 Initiating login....
-Login: [here put your username]
-Password: [here put your password]
+Login: username
+Password: password
 ```
-If everything went correctly you should get your `oauth_token` and `oauth_token_secret` printed out.
-
-Then you will be asked to input the user_id of the Twitter account you want to get the Fleets of.
-
+If you put your credentials correctly, you should be met with
 ```bash
-WARNING! 'user_id' is not the @ handle
-To get someone's user_id visit: https://tweeterid.com/
-user_id: [input the user id]
+<Response [200]>
+oauth_token_key: 123456-oauth-token
+oauth_token_secret: IaMASecRet12356
+Copy your oauth_token and secret and write them into the file
+then you won't have to go through the login process again in the future
 ```
-
-If everything went correctly you should get
+Now you can start using 'get' commands. For now there are only two options: 'fleets' (or 'f') and 'blockedby' (or 'bb').
+'fleets' require you to put in user_id or @ handle.
 ```bash
+ftwitter> get f 12
+```
+or
+```bash
+ftwitter> get f jack
+```
+If such user exists and everything went correctly you should be met with with url's to that user's Fleets.
+``bash
 <Response [200]>
 [url's of Fleets]
 ```

@@ -143,15 +143,20 @@ def login():
 
 def get(command, var):
     auth = OAuth1(consumer_key,consumer_secret,oauth_token_key,oauth_token_secret)
-    if command == 'fleets' or command == 'f':
+    if command == 'fleets' or command == 'f' and var:
         user = get_user(var, auth, var.isdigit())
         if not user:
             print("User not found or other error. Check JSON message above")
         else:
             print(f"{user[0]}'s fleets: ")
             get_fleets(user[1],auth)
-    elif command == "blockedby" or "bb":
+    elif command == 'fleets' or command == 'f' and not var:
+        print("Command 'get fleets' requires user_id or @ handle as an argument")
+    elif command == "blockedby" or command == "bb":
         print("Not available (yet)")
+    else:
+        print("Available commands: \n login (l) \n get fleets (f) \n get blockedby (bb) \n exit (e)")
+
 
 
 def start_cmd():
@@ -166,10 +171,12 @@ def start_cmd():
                 print("Oauth token not present")
                 print("First call login before any other action")
             else:
-                try:
+                if len(args)==3:
                     get(args[1],args[2])
-                except IndexError:
-                    print("commands 'get fleets' and 'get blockedby' require user_id or @ handle as an argument")
+                elif len(args)==2:
+                    get(args[1],"")
+                else:
+                    print("Wrong ammount of arguments")
 
 
         elif first == 'exit' or first == 'e':
