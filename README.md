@@ -39,12 +39,12 @@ python3 ftwitter.py
 ```
 
 You will be met with this prompt
-```bash
+```
 ftwitter>
 ```
 
 Before any other action (except 'exit') you first must log in. Do it by typing 'login' or 'l'
-```bash
+```
 ftwitter> l
 Oauth token not present.
 Oauth token not present
@@ -53,7 +53,7 @@ Login: username
 Password: password
 ```
 If you put your credentials correctly, you should be met with
-```bash
+```
 <Response [200]>
 oauth_token_key: 123456-oauth-token
 oauth_token_secret: IaMASecRet12356
@@ -62,15 +62,15 @@ then you won't have to go through the login process again in the future
 ```
 Now you can start using 'get' commands. For now there are only two options: 'fleets' (or 'f') and 'blockedby' (or 'bb').
 'fleets' require you to put in user_id or @ handle.
-```bash
+```
 ftwitter> get f 12
 ```
 or
-```bash
+```
 ftwitter> get f jack
 ```
 If such user exists and everything went correctly you should be met with with url's to that user's Fleets.
-``bash
+``
 <Response [200]>
 [url's of Fleets]
 ```
