@@ -1,4 +1,4 @@
-# FTwitter
+# FTwitter (Doesn't work anymore due to birdsite removing Fleets feature. Archived)
 
 FTwitter is a tool written in Python used to obtain urls to images posted in user Fleets. All information required to create this app was obtained with reverse engineering.
 
